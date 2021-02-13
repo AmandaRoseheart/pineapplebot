@@ -1,18 +1,16 @@
 # bot.py
-import discord
 import os
-from dotenv import load_dotenv
+import discord
 from discord.ext import commands
-
-load_dotenv()
 
 TOKEN = os.environ['DISCORD_TOKEN']
 
-intents = discord.Intents.default()
-intents.members = True
+def create_bot():
+    intents = discord.Intents.default()
+    intents.members = True
+    return commands.Bot(command_prefix='~', intents=intents)
 
-bot = commands.Bot(intents=intents, command_prefix='~')
-
+bot = create_bot()
 
 @bot.event
 async def on_ready():
@@ -30,5 +28,6 @@ async def send_messages(ctx, role, message):
 def user_has_role(user, role):
     role_names = list(map(lambda r: r.name, user.roles))
     return role in role_names
+
 
 bot.run(TOKEN)
