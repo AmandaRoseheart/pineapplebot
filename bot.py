@@ -20,15 +20,14 @@ async def on_ready():
 
 @bot.command(name='send-messages')
 async def sendmessages(ctx, role, message):
-    
-    result = []
     members = await ctx.guild.fetch_members(limit=150).flatten()
     for member in members:
-        role_names = list(map(lambda r: r.name, member.roles))
-        if role in role_names:
-            result.append(member)
-    for target in result:
-        await target.send(message)
+        if user_has_role(member, role):
+            await member.send(message)
     await ctx.author.send("Messages sent!")
+
+def user_has_role(user, role):
+    role_names = list(map(lambda r: r.name, user.roles))
+    return role in role_names
 
 bot.run(TOKEN)
