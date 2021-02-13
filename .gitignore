@@ -1,1 +1,3 @@
 .env
+runlocal.bat
+create_image.bat
