@@ -19,6 +19,7 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
 @bot.command(name='send-messages')
+@commands.has_permissions(mention_everyone=True) 
 async def send_messages(ctx, role, message):
     members = await ctx.guild.fetch_members(limit=150).flatten()
     for member in members:
