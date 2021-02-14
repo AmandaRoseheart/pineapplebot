@@ -29,5 +29,9 @@ def user_has_role(user, role):
     role_names = list(map(lambda r: r.name, user.roles))
     return role in role_names
 
+@send_messages.error
+async def send_messages_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("**ERROR**: You don't have the MENTION_EVERYONE permission.")
 
 bot.run(TOKEN)
