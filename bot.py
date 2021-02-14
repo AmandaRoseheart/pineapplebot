@@ -16,7 +16,7 @@ bot = create_bot()
 async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 
-@bot.command(name='send-messages')
+@bot.command(name='send-messages', brief='Sends a DM to all members with specified role', description='This command will send message <message> to all members with the role <role>. Remember to use double quotes around the message, eg. ~send-message Role1 "Hello World!". The command will return the number of messages sent. IMPORTANT: It can only be excuted by members with the MENTION_EVERYONE permission.')
 @commands.has_permissions(mention_everyone=True) 
 async def send_messages(ctx, role, message):
     total = 0
