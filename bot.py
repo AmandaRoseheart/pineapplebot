@@ -19,11 +19,13 @@ async def on_ready():
 @bot.command(name='send-messages')
 @commands.has_permissions(mention_everyone=True) 
 async def send_messages(ctx, role, message):
+    total = 0
     members = await ctx.guild.fetch_members(limit=150).flatten()
     for member in members:
         if user_has_role(member, role):
             await member.send(message)
-    await ctx.send("Messages sent!")
+            total += 1
+    await ctx.send('{0} message(s) sent!'.format(total))
 
 def user_has_role(user, role):
     role_names = list(map(lambda r: r.name, user.roles))
@@ -32,6 +34,6 @@ def user_has_role(user, role):
 @send_messages.error
 async def send_messages_error(ctx, error):
     if isinstance(error, commands.MissingPermissions):
-        await ctx.send("**ERROR**: You don't have the MENTION_EVERYONE permission.")
+        await ctx.send('**ERROR**: You don\'t have the MENTION_EVERYONE permission.')
 
 bot.run(TOKEN)
